@@ -1,7 +1,7 @@
 import requests
 
 base_url = 'http://api.musixmatch.com/ws/1.1/'
-api_key = 'apikey='
+api_key = 'apikey=132089eb79411e38f50d1b460db0d233&'
 
 artist_query = base_url + 'artist.search?' + api_key + 'q_artist=prodigy&page_size=1'  # Change the last part
 r = requests.get(artist_query)
