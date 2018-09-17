@@ -1,3 +1,4 @@
+import json
 import math
 
 from nltk.corpus import stopwords
@@ -83,7 +84,9 @@ class Indexer:
 # The above 3 download the requirements for any nltk methods I have used to
 # function properly. They need to be run the first time, after which you can comment them out
 folder = '..\Corpus'  # Keep Corpus and Scraper in the same directory
-# TODO: open model file (JSON) and read it into a dictionary named 'ind'
-ind = {}  # TODO: Replace this blank index with what is read from file
+try:
+    ind = json.load(open('model'))
+except IOError:
+    ind = {}
 ind = Indexer.create_matrix(folder, ind)
-# TODO: write this index back to the file (overwrite the file)
+json.dump(ind, open('model', 'w'))

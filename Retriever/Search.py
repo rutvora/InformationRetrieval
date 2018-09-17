@@ -1,3 +1,4 @@
+import json
 import math
 
 from nltk.corpus import stopwords
@@ -15,8 +16,11 @@ class Search:
         N = FileManager.get_all_file_names('..\Corpus').count()
         stop_words = set(stopwords.words('english'))
         tokens = Indexer.Indexer.return_tokens(query, stop_words)
-        model = open('model')
-        index = model.read()  # TODO
+        try:
+            index = json.load(open('model'))
+        except IOError:
+            results = "No index generated yet"
+            return results
         token_results = list()
         for token in tokens:
             try:
