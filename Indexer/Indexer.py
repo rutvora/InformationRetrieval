@@ -1,5 +1,6 @@
 import json
 import math
+from pprint import pprint
 
 from nltk.corpus import stopwords
 from nltk.stem import PorterStemmer, WordNetLemmatizer
@@ -55,8 +56,8 @@ class Indexer:
         file_name_list = FileManager.get_all_file_names(directory)  # I changed it from a generator since we
         # need the number of documents
 
-        for file in file_name_list:
-            file_name = file_name_list[file]  # make sure it runs on one first, then we'll index the entire corpus
+        for file_name in file_name_list:
+            # make sure it runs on one first, then we'll index the entire corpus
             file_object = open(file_name)
             file_content = file_object.read()
             tokens = Indexer.return_tokens(file_content, stop_words)
@@ -68,6 +69,8 @@ class Indexer:
                 to_add = {'Name': file_name, 'TF': Indexer.return_tf(file_object, token)}
                 current_data.append(to_add)
                 index[token] = current_data
+            # exit()
+            # return index
         return index
 
     @staticmethod
@@ -84,9 +87,17 @@ class Indexer:
 # The above 3 download the requirements for any nltk methods I have used to
 # function properly. They need to be run the first time, after which you can comment them out
 folder = '..\Corpus'  # Keep Corpus and Scraper in the same directory
-try:
-    ind = json.load(open('model'))
-except IOError:
-    ind = {}
+# pprint(FileManager.get_all_file_names(folder))
+# exit()
+# fo= open('model.json', 'w')
+# fo.write('')
+# exit()
+# try:
+#    ind = json.load(open('model.json'))
+# except IOError:
+#    ind = {}
+ind = {}
 ind = Indexer.create_matrix(folder, ind)
-json.dump(ind, open('model', 'w'))
+fo = open('model.json', 'w')
+pprint(ind)
+json.dump(ind, fo)
